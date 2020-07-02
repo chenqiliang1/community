@@ -1,0 +1,11 @@
+body{
+    background: url("../img/bg.jpg") repeat;
+}
+.main{
+    background-color: white;
+    margin: 30px;
+}
+.btn-publish{
+    float: left;
+    margin-bottom: 15px;
+}
