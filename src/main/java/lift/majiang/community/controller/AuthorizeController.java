@@ -79,7 +79,7 @@ public class AuthorizeController {
             session.setAttribute("user",gitHubUser);
             return "redirect:/";
         }else{
-
+            System.out.println(1);
         }
         return "index";
     }
