@@ -57,6 +57,9 @@ public class GitHubProvider {
     }
 
     private GitHubUser toObject(JSONObject jsonObject){
+        if(jsonObject == null){
+            return null;
+        }
         GitHubUser gitHubUser = new GitHubUser();
         gitHubUser.setId(jsonObject.getLong("id"));
         gitHubUser.setName(jsonObject.getString("name"));
