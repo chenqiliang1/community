@@ -3,3 +3,7 @@ gitee:
     clientid: edefb22b8c9fb1c4e27e2fcb7d0ce0572ab4d2644b206ce6973f043f10e1a3e8
     clientsecret: 2e2fe2003590f751a599fb522d251b9644303056bda5f3f9afdb50d5ea8c3b28
     callback: http://localhost:8080/callback
+
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true

@@ -68,8 +68,10 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
+        System.out.println(user);
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(System.currentTimeMillis());
+        question.setCreator(Long.parseLong(user.getAccountId()));
         questionService.create(question);
         return "redirect:/";
     }
