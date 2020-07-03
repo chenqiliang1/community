@@ -65,7 +65,7 @@ public class GitHubProvider {
         gitHubUser.setName(jsonObject.getString("name"));
         gitHubUser.setEmail(jsonObject.getString("email"));
         gitHubUser.setPhone(jsonObject.getString("phone"));
-        gitHubUser.setAvatar_url(jsonObject.getString("avatar_url"));
+        gitHubUser.setAvatarUrl(jsonObject.getString("avatar_url"));
         return gitHubUser;
     }
 }

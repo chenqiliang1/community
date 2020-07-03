@@ -9,5 +9,5 @@ public class GitHubUser {
     private Long id;
     private String email;
     private String phone;
-    private String avatar_url;
+    private String avatarUrl;
 }
