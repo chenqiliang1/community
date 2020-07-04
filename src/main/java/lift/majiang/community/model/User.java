@@ -13,4 +13,6 @@ public class User {
   private long gmtModified;
   private String avatarUrl;
 
+    public void updateToken(User user) {
+    }
 }

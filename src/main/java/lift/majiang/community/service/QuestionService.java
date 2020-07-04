@@ -12,4 +12,6 @@ public interface QuestionService {
     PaginationDTO listByUserId(long id, Integer page, Integer size);
 
     QuestionDTO getById(Integer id);
+
+    void createOrUpdate(Question question);
 }

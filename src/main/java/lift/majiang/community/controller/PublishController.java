@@ -1,5 +1,6 @@
 package lift.majiang.community.controller;
 
+import lift.majiang.community.dto.QuestionDTO;
 import lift.majiang.community.model.Question;
 import lift.majiang.community.model.User;
 import lift.majiang.community.service.QuestionService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
@@ -22,6 +24,16 @@ public class PublishController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id")Integer id,Model model){
+        QuestionDTO question = questionService.getById(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+        model.addAttribute("id",question.getId());
+        return "publish";
+    }
+
     @GetMapping("/publish")
     public String publish(){
         return "publish";
@@ -31,7 +43,6 @@ public class PublishController {
     public String doPublish(Question question,
                             HttpServletRequest request,
                             Model model){
-
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
@@ -57,10 +68,8 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(System.currentTimeMillis());
         question.setCreator(Long.parseLong(user.getAccountId()));
-        questionService.create(question);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 

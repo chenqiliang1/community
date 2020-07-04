@@ -27,7 +27,13 @@ public class AuthorizeServiceImpl implements AuthorizeService {
         user.setGmtCreate(System.currentTimeMillis());
         user.setGmtModified(user.getGmtCreate());
         user.setAvatarUrl(gitHubUser.getAvatarUrl());
-        userMapper.insert(user);
+        User user1 = userMapper.findByAoountId(user.getAccountId());
+        if(user1 != null){
+            userMapper.updateToken(user);
+        }else{
+            userMapper.insert(user);
+        }
+
         return user;
     }
 }

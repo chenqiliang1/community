@@ -94,4 +94,17 @@ public class QuestionServiceImpl implements QuestionService {
         questionDTO.setUser(user);
         return questionDTO;
     }
+
+    @Override
+    public void createOrUpdate(Question question) {
+        Long id = question.getId();
+        if( id == null){
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.create(question);
+        }else{
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
+    }
 }

@@ -1,10 +1,7 @@
 package lift.majiang.community.mapper;
 
 import lift.majiang.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -19,6 +16,16 @@ public interface UserMapper {
     User findByToken(@Param("token") String token);
 
 
-    @Select("select * from user where id = #{id}")
+    @Select("select * from user where account_id = #{id}")
     User findById(@Param("id") Long id);
+
+    @Select("select * from user where account_id = #{accountId}")
+    User findByAoountId(@Param("accountId") String accountId);
+
+    @Update("update user set token = #{token} ," +
+            "avatar_url = #{avatarUrl} ," +
+            "name = #{name}," +
+            "gmt_modified = #{gmtModified} " +
+            "where account_id = #{accountId}")
+    void updateToken(User user);
 }
