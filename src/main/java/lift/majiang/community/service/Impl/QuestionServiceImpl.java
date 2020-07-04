@@ -6,6 +6,7 @@ import lift.majiang.community.mapper.QuestionMapper;
 import lift.majiang.community.mapper.UserMapper;
 import lift.majiang.community.model.Question;
 import lift.majiang.community.model.User;
+import lift.majiang.community.model.UserExample;
 import lift.majiang.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,9 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> list = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : list) {
-            User user = userMapper.findById(question.getCreator());
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andAccountIdEqualTo(String.valueOf(question.getCreator()));
+            User user = userMapper.selectByExample(userExample).get(0);
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
@@ -75,7 +78,9 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> list = questionMapper.listByUserId(id,offset,size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : list) {
-            User user = userMapper.findById(question.getCreator());
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andAccountIdEqualTo(String.valueOf(question.getCreator()));
+            User user = userMapper.selectByExample(userExample).get(0);
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
@@ -89,7 +94,9 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.getById(id);
         QuestionDTO questionDTO = new QuestionDTO();
-        User user = userMapper.findById(question.getCreator());
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIdEqualTo(String.valueOf(question.getCreator()));
+        User user = userMapper.selectByExample(userExample).get(0);
         BeanUtils.copyProperties(question,questionDTO);
         questionDTO.setUser(user);
         return questionDTO;
@@ -97,8 +104,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void createOrUpdate(Question question) {
-        Long id = question.getId();
-        if( id == null){
+
+        if( question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(System.currentTimeMillis());
             questionMapper.create(question);

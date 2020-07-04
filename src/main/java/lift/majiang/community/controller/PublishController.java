@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -40,24 +41,27 @@ public class PublishController {
     }
 
     @PostMapping("/publish")
-    public String doPublish(Question question,
+    public String doPublish(@RequestParam("title")String title,
+                            @RequestParam("description")String description,
+                            @RequestParam("id")String id,
+                            @RequestParam("tag")String tag,
                             HttpServletRequest request,
                             Model model){
-        model.addAttribute("title",question.getTitle());
-        model.addAttribute("description",question.getDescription());
-        model.addAttribute("tag",question.getTag());
+        model.addAttribute("title",title);
+        model.addAttribute("description",description);
+        model.addAttribute("tag",tag);
 
-        if(question.getTitle()==null || question.getTitle().equals("")){
+        if(title == null || title.equals("")){
             model.addAttribute("error","标题不能为空");
             return "publish";
         }
 
-        if(question.getDescription()==null || question.getDescription().equals("")){
+        if(description ==null ||description.equals("")){
             model.addAttribute("error","内容不能为空");
             return "publish";
         }
 
-        if(question.getTag()==null || question.getTag().equals("")){
+        if(tag==null || tag.equals("")){
             model.addAttribute("error","标签不能为空");
             return "publish";
         }
@@ -68,7 +72,14 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
+        Question question = new Question();
+        question.setDescription(description);
         question.setCreator(Long.parseLong(user.getAccountId()));
+        question.setTag(tag);
+        question.setTitle(title);
+        if(!"".equals(id)){
+            question.setId(Long.parseLong(id));
+        }
         questionService.createOrUpdate(question);
         return "redirect:/";
     }

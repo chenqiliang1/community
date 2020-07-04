@@ -1,5 +1,6 @@
 package lift.majiang.community.interceptor;
 
+import lift.majiang.community.mapper.UserMapper;
 import lift.majiang.community.model.User;
 import lift.majiang.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
     private UserService userService;
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

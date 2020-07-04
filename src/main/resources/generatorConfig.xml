@@ -10,6 +10,7 @@
                         connectionURL="jdbc:mysql://127.0.0.1:3306/community?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai"
                         userId="root"
                         password="a13413350960">
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <javaTypeResolver >
@@ -27,9 +28,10 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="lift.majiang.community.mapper"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
+
         </javaClientGenerator>
 
-        <table schema="DB2ADMIN" tableName="user" domainObjectName="user" >
+        <table schema="DB2ADMIN" tableName="user" domainObjectName="User" >
         </table>
 
     </context>
